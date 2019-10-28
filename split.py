@@ -1,17 +1,20 @@
-from PyPDF2 import  PdfFileReader,PdfFileWriter
+from PyPDF2 import PdfFileReader, PdfFileWriter
 
-archivo = open("Big.pdf","rb")
-reader = PdfFileReader(archivo)
-page = reader.getNumPages()
+documento = open("Big.pdf","rb")
+pdf = PdfFileReader(documento)
 
-writer = PdfFileWriter()
+Pareswriter   = PdfFileWriter()
+Impareswriter = PdfFileWriter()
 
-for i in range(page):
-    if i%2 != 0:
-        page = reader.getPage(i)
-        writer.addPage(page)
+for i in range(pdf.getNumPages()):
+    PaginaActual = pdf.getPage(i)
+    if i % 2 == 0:
+        Pareswriter.addPage(PaginaActual)
+    else:
+        Impareswriter.addPage(PaginaActual)
 
-salida = open("Impares.dpf","wb")
-writer.write(salida)
-salida.close()
+with open("Pares.pdf", "wb") as f:
+    Pareswriter.write(f)
 
+with open("Impares.pdf", "wb") as g:
+    Impareswriter.write(g)
